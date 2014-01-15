@@ -12,7 +12,7 @@ class ShortenedUrl < ActiveRecord::Base
 
   def self.random_code
     short_url = nil
-    until short_url && !self.short_urls.include?(short_url)
+    until short_url && ShortenedUrl.find_by_short_url(short_url).nil?
       short_url = SecureRandom::urlsafe_base64
     end
 
@@ -24,7 +24,7 @@ class ShortenedUrl < ActiveRecord::Base
 
     new_entry.short_url = ShortenedUrl.random_code
     new_entry.long_url = long_url
-    new_entry.submitted_id = user.id
+    new_entry.submitter_id = user.id
 
     new_entry.save!
   end
