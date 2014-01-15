@@ -10,6 +10,15 @@ class ShortenedUrl < ActiveRecord::Base
     :primary_key => :id
   )
 
+  has_many(
+    :visits,
+    :class_name => "Visit",
+    :foreign_key => :url_id,
+    :primary_key => :id
+  )
+
+  has_many :visitors, :through => :visits, :source => :visitor
+
   def self.random_code
     short_url = nil
     until short_url && ShortenedUrl.find_by_short_url(short_url).nil?

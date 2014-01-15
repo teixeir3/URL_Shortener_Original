@@ -7,7 +7,7 @@ class Visit < ActiveRecord::Base
   )
 
   belongs_to(
-    :url,
+    :visited_url,
     :class_name => "ShortenedUrl",
     :foreign_key => :url_id,
     :primary_key => :id
