@@ -1,11 +1,7 @@
 class CreateShortenedUrlTable < ActiveRecord::Migration
   def change
-    create_table :shortened_urls do |t|
-      t.integer :submitter_id
-      t.string :short_url
-      t.text :long_url
-
-      t.timestamps
-    end
+    add_column :shortened_urls, :submitter_id, :integer
+    add_column :shortened_urls, :short_url, :string
+    add_column :shortened_urls, :long_url, :text
   end
 end
