@@ -17,7 +17,7 @@ class ShortenedUrl < ActiveRecord::Base
     :primary_key => :id
   )
 
-  has_many :visitors, :through => :visits, :source => :visitor
+  has_many :visitors, :through => :visits, :source => :visitor, :uniq => true
 
   def self.random_code
     short_url = nil
