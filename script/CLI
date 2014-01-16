@@ -1,0 +1,45 @@
+#!/usr/bin/env ruby
+
+p "Enter your email, silly human:"
+email = gets.chomp
+
+p email
+
+# if the user with this email is not in the database
+# prompt first name
+# prompt last name
+# create a record in the database
+
+# else they're in the database
+# we look them up and set the 'current_user' to that person
+
+if User.find_by_email(email).nil?
+  u = User.new
+  puts "What is your first name?"
+  u.fname = gets.chomp
+  puts "What is your last name?"
+  u.lname = gets.chomp
+  u.email = email
+  u.save!
+end
+
+puts current_user = User.find_by_email(email)
+
+puts "What do you want to do? \n"
+puts "0: Create shortened URL \n"
+puts "1: Visit shortened URL \n"
+user_choice = gets.chomp.to_i
+
+if user_choice == 0
+  puts "Type in your long url:"
+  long_url = gets.chomp
+  ShortenedUrl.create_for_user_and_long_url!(current_user, long_url)
+  short_url = ShortenedUrl.find_by_long_url(long_url).short_url
+  puts "Short URL is #{short_url}"
+elsif user_choice == 1
+  puts "Type in the shortened URL:"
+  shortened_url = gets.chomp
+  Launchy.open(ShortenedUrl.find_by_short_url(shortened_url).long_url)
+else
+  "THAT WASN'T A CHOICE, STUPID HUMAN!"
+end
